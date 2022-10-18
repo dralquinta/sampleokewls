@@ -99,7 +99,7 @@ spec:
     serverStartState: RUNNING
   clusters:
   - clusterName: bdbdevembdomain-cluster
-    replicas: 2
+    replicas: 1
     serverPod:
       affinity:
         podAntiAffinity:
