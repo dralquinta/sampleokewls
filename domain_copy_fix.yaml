@@ -86,7 +86,6 @@ metadata:
     time: '2022-10-18T18:03:27Z'
   name: bdbdevembdomain
   namespace: bdbdevembdomain-ns
-  resourceVersion: '44616131'
   uid: f5174b03-bd95-4fc2-9c0e-7dae55a15672
 spec:
   adminServer:

@@ -118,6 +118,7 @@ spec:
         value: -XX:+UseContainerSupport -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom
       - name: JAVA_OPTIONS
         value: -Dweblogic.store.file.LockEnabled=false -Dweblogic.rjvm.allowUnknownHost=true -Dweblogic.security.remoteAnonymousRMIT3Enabled=false -Dweblogic.security.remoteAnonymousRMIIIOPEnabled=false
+
     serverStartState: RUNNING
   configuration:
     introspectorJobActiveDeadlineSeconds: 900
