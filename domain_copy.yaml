@@ -96,8 +96,6 @@ spec:
         value: -Xms256m -Xmx512m -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom
       - name: JAVA_OPTIONS
         value: -Dweblogic.store.file.LockEnabled=false -Dweblogic.rjvm.allowUnknownHost=true -Dweblogic.security.remoteAnonymousRMIT3Enabled=false -Dweblogic.security.remoteAnonymousRMIIIOPEnabled=false
-      - name: CLASSPATH
-        value: "/u01/shared/varios_embargos/lib"
     serverStartState: RUNNING
   clusters:
   - clusterName: bdbdevembdomain-cluster
