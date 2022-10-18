@@ -1,0 +1,237 @@
+apiVersion: weblogic.oracle/v8
+kind: Domain
+metadata:
+  creationTimestamp: '2022-10-18T17:53:00Z'
+  generation: 2
+  labels:
+    weblogic.domainUID: bdbdevembdomain-uid
+  managedFields:
+  - apiVersion: weblogic.oracle/v8
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:weblogic.domainUID: {}
+      f:spec:
+        .: {}
+        f:adminServer:
+          .: {}
+          f:serverPod:
+            .: {}
+            f:env: {}
+          f:serverStartState: {}
+        f:clusters: {}
+        f:configuration:
+          .: {}
+          f:introspectorJobActiveDeadlineSeconds: {}
+          f:model:
+            .: {}
+            f:configMap: {}
+            f:domainType: {}
+            f:runtimeEncryptionSecret: {}
+          f:opss:
+            .: {}
+            f:walletPasswordSecret: {}
+          f:secrets: {}
+        f:dataHome: {}
+        f:domainHome: {}
+        f:domainHomeSourceType: {}
+        f:image: {}
+        f:imagePullPolicy: {}
+        f:imagePullSecrets: {}
+        f:includeServerOutInPodLog: {}
+        f:logHome: {}
+        f:logHomeEnabled: {}
+        f:serverPod:
+          .: {}
+          f:env: {}
+          f:nodeSelector:
+            .: {}
+            f:name: {}
+            f:usage: {}
+          f:volumeMounts: {}
+          f:volumes: {}
+        f:serverStartPolicy: {}
+        f:webLogicCredentialsSecret:
+          .: {}
+          f:name: {}
+    manager: OpenAPI-Generator
+    operation: Update
+    time: '2022-10-18T17:53:00Z'
+  - apiVersion: weblogic.oracle/v8
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:configuration:
+          f:opss:
+            f:walletFileSecret: {}
+        f:restartVersion: {}
+    manager: kubectl-patch
+    operation: Update
+    time: '2022-10-18T17:57:32Z'
+  - apiVersion: weblogic.oracle/v8
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        .: {}
+        f:clusters: {}
+        f:conditions: {}
+        f:introspectJobFailureCount: {}
+        f:replicas: {}
+        f:servers: {}
+        f:startTime: {}
+    manager: Kubernetes Java Client
+    operation: Update
+    time: '2022-10-18T18:03:27Z'
+  name: bdbdevembdomain
+  namespace: bdbdevembdomain-ns
+  resourceVersion: '44616131'
+  uid: f5174b03-bd95-4fc2-9c0e-7dae55a15672
+spec:
+  adminServer:
+    serverPod:
+      env:
+      - name: USER_MEM_ARGS
+        value: -Xms256m -Xmx512m -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom
+      - name: JAVA_OPTIONS
+        value: -Dweblogic.store.file.LockEnabled=false -Dweblogic.rjvm.allowUnknownHost=true
+          -Dweblogic.security.remoteAnonymousRMIT3Enabled=false -Dweblogic.security.remoteAnonymousRMIIIOPEnabled=false
+    serverStartState: RUNNING
+  clusters:
+  - clusterName: bdbdevembdomain-cluster
+    replicas: 2
+    serverPod:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: weblogic.clusterName
+                  operator: In
+                  values:
+                  - bdbdevembdomain-cluster
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      env:
+      - name: USER_MEM_ARGS
+        value: -XX:+UseContainerSupport -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom
+      - name: JAVA_OPTIONS
+        value: -Dweblogic.store.file.LockEnabled=false -Dweblogic.rjvm.allowUnknownHost=true
+          -Dweblogic.security.remoteAnonymousRMIT3Enabled=false -Dweblogic.security.remoteAnonymousRMIIIOPEnabled=false
+    serverStartState: RUNNING
+  configuration:
+    introspectorJobActiveDeadlineSeconds: 900
+    model:
+      configMap: bdbdevembdomain-configmap
+      domainType: JRF
+      runtimeEncryptionSecret: bdbdevembdomain-runtime-encryption-secret
+    opss:
+      walletFileSecret: bdbdevembdomain-opss-wallet-file-secret
+      walletPasswordSecret: bdbdevembdomain-opss-wallet-password-secret
+    secrets:
+    - bdbdevembdomain-password-secret
+    - bdbdevembdomain-rcu-access
+  dataHome: /u01/shared/weblogic-domains/bdbdevembdomain/data/store
+  domainHome: /u01/data/domains/bdbdevembdomain-uid
+  domainHomeSourceType: FromModel
+  image: iad.ocir.io/grgdnvn2ezyy/dev/wls-base-image/bdbdevembdomain/122140:12.2.1.4.220419-220422-22-10-18_18-07-46
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+  - name: ocirsecrets
+  includeServerOutInPodLog: true
+  logHome: /u01/shared/weblogic-domains/bdbdevembdomain/logs
+  logHomeEnabled: true
+  restartVersion: '2'
+  serverPod:
+    env:
+    - name: RESOURCE_PREFIX
+      value: bdbdevembdomain
+    - name: JAVA_OPTIONS
+      value: '-Dweblogic.StdoutDebugEnabled=false -Doracle.jdbc.fanEnabled=false '
+    - name: OKE_DOMAIN_NAME
+      value: bdbdevembdomain
+    nodeSelector:
+      name: dev-wls-np
+      usage: weblogic
+    volumeMounts:
+    - mountPath: /u01/shared
+      name: weblogic-domain-storage-volume
+    volumes:
+    - name: weblogic-domain-storage-volume
+      persistentVolumeClaim:
+        claimName: bdbdevembdomain-oke-pvc
+  serverStartPolicy: IF_NEEDED
+  webLogicCredentialsSecret:
+    name: bdbdevembdomain-weblogic-credentials
+status:
+  clusters:
+  - clusterName: bdbdevembdomain-cluster
+    maximumReplicas: 9
+    minimumReplicas: 0
+    readyReplicas: 2
+    replicas: 2
+    replicasGoal: 2
+  conditions:
+  - lastTransitionTime: '2022-10-18T18:04:55.702925Z'
+    reason: ServersReady
+    status: 'True'
+    type: Available
+  introspectJobFailureCount: 0
+  replicas: 2
+  servers:
+  - desiredState: RUNNING
+    health:
+      activationTime: '2022-10-18T18:03:04.543000Z'
+      overallHealth: ok
+      subsystems:
+      - subsystemName: ServerRuntime
+        symptoms: []
+    nodeName: 10.91.12.42
+    serverName: bdbdevembdomain-adminserver
+    state: RUNNING
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: RUNNING
+    health:
+      activationTime: '2022-10-18T18:04:51.603000Z'
+      overallHealth: ok
+      subsystems:
+      - subsystemName: ServerRuntime
+        symptoms: []
+    nodeName: 10.91.12.42
+    serverName: bdbdevembdomain-managed-server1
+    state: RUNNING
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: RUNNING
+    health:
+      activationTime: '2022-10-18T18:04:41.132000Z'
+      overallHealth: ok
+      subsystems:
+      - subsystemName: ServerRuntime
+        symptoms: []
+    nodeName: 10.91.12.36
+    serverName: bdbdevembdomain-managed-server2
+    state: RUNNING
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server3
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server4
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server5
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server6
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server7
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server8
+  - clusterName: bdbdevembdomain-cluster
+    desiredState: SHUTDOWN
+    serverName: bdbdevembdomain-managed-server9
+  startTime: '2022-10-18T17:53:01.081033Z'
